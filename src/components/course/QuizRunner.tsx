@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { clsx } from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { QuizQuestion } from "@/content/types";
@@ -168,7 +168,7 @@ export function QuizRunner({
       </div>
       <ProgressBar value={(i + (answered ? 1 : 0)) / questions.length} label="Quiz progress" />
       <AnimatePresence mode="wait">
-        <motion.div
+        <m.div
           key={q.id}
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
@@ -213,7 +213,7 @@ export function QuizRunner({
           </div>
           <AnimatePresence>
             {answered && (
-              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-5" role="status">
+              <m.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-5" role="status">
                 <div className={clsx("rounded-2xl p-5", q.options[picked].correct ? "bg-success-soft" : "bg-danger-soft")}>
                   <p className={clsx("font-bold", q.options[picked].correct ? "text-success-ink" : "text-danger-ink")}>
                     {q.options[picked].correct ? "Correct!" : "Not quite."}
@@ -232,10 +232,10 @@ export function QuizRunner({
                 <Button size="lg" className="mt-5 w-full sm:w-auto" onClick={next} disabled={phase === "submitting"} data-testid="next-question" autoFocus>
                   {phase === "submitting" ? "Grading…" : i < questions.length - 1 ? "Next question →" : "See my score"}
                 </Button>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </m.div>
       </AnimatePresence>
     </div>
   );

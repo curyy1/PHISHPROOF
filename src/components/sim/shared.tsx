@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { clsx } from "clsx";
 import { useCallback, useState, type ReactNode } from "react";
 import type { Hotspot } from "@/content/types";
@@ -196,7 +196,7 @@ export function DrillFeedback({
   const missed = hotspots.filter((h) => grade.missedIds.includes(h.id));
   return (
     <AnimatePresence>
-      <motion.section
+      <m.section
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
@@ -248,7 +248,7 @@ export function DrillFeedback({
             </Button>
           )}
         </div>
-      </motion.section>
+      </m.section>
     </AnimatePresence>
   );
 }

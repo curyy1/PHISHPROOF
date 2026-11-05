@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m as mo } from "framer-motion";
 import { modules } from "@/content";
 import { examPassed, examUnlocked, moduleProgress } from "@/lib/progress";
 import { useProgress } from "@/components/ProgressProvider";
@@ -16,7 +16,7 @@ export function ModuleGrid({ locked }: { locked: boolean }) {
         const p = state ? moduleProgress(state, m) : null;
         const isLocked = locked && !m.guestAccessible;
         return (
-          <motion.li
+          <mo.li
             key={m.id}
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -50,7 +50,7 @@ export function ModuleGrid({ locked }: { locked: boolean }) {
                 <ProgressBar value={p?.ratio ?? 0} label={`${m.title} progress`} />
               </div>
             </Link>
-          </motion.li>
+          </mo.li>
         );
       })}
       <li>

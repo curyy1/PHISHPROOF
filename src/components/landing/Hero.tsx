@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ButtonLink } from "@/components/ui/Button";
 import { TrainingBadge } from "@/components/ui/Pill";
 
@@ -19,10 +19,10 @@ export function Hero() {
         style={{ background: "radial-gradient(closest-side, var(--brand), transparent)" }}
       />
       <div className="container-page relative text-center">
-        <motion.p className="eyebrow" variants={rise} initial="hidden" animate="show" custom={0}>
+        <m.p className="eyebrow" variants={rise} initial="hidden" animate="show" custom={0}>
           A free phishing-awareness course
-        </motion.p>
-        <motion.h1
+        </m.p>
+        <m.h1
           id="hero-title"
           className="mx-auto mt-5 max-w-5xl text-hero font-extrabold"
           variants={rise}
@@ -31,8 +31,8 @@ export function Hero() {
           custom={1}
         >
           Don’t take <span className="text-gradient">the bait.</span>
-        </motion.h1>
-        <motion.p
+        </m.h1>
+        <m.p
           className="mx-auto mt-6 max-w-2xl text-lead text-muted"
           variants={rise}
           initial="hidden"
@@ -41,8 +41,8 @@ export function Hero() {
         >
           Scammers got smarter. So can you. Learn the tricks behind phishing emails, texts, calls and fake login pages —
           then practice on realistic simulations until spotting them is second nature.
-        </motion.p>
-        <motion.div
+        </m.p>
+        <m.div
           className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
           variants={rise}
           initial="hidden"
@@ -55,16 +55,16 @@ export function Hero() {
           <ButtonLink href="/practice/inbox" variant="secondary" size="lg">
             Try Spot the Phish
           </ButtonLink>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           className="relative mx-auto mt-16 max-w-3xl"
           initial={{ opacity: 0, y: 40, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ delay: 0.35, duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
           <HeroInbox />
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -90,7 +90,7 @@ function HeroInbox() {
       </div>
       <ul>
         {rows.map((r, i) => (
-          <motion.li
+          <m.li
             key={r.subject}
             className="flex items-center gap-3 border-b border-line px-4 py-3.5 last:border-0"
             initial={{ opacity: 0, x: -12 }}
@@ -108,7 +108,7 @@ function HeroInbox() {
               <p className="truncate text-sm font-semibold">{r.from}</p>
               <p className="truncate text-sm text-muted">{r.subject}</p>
             </div>
-            <motion.span
+            <m.span
               className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-bold ${
                 r.phish ? "bg-danger text-on-danger" : "bg-success-soft text-success-ink"
               }`}
@@ -117,8 +117,8 @@ function HeroInbox() {
               transition={{ delay: 1.4 + i * 0.25, type: "spring", stiffness: 500, damping: 22 }}
             >
               {r.phish ? "Phish" : "Legit"}
-            </motion.span>
-          </motion.li>
+            </m.span>
+          </m.li>
         ))}
       </ul>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from "react";
 
 type Toast = { id: number; title: string; body?: string; icon?: string; tone?: "brand" | "success" | "danger" };
@@ -27,9 +27,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       >
         <AnimatePresence initial={false}>
           {toasts.map((t) => (
-            <motion.div
+            <m.div
               key={t.id}
-              layout
               initial={{ opacity: 0, y: 16, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
@@ -46,7 +45,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 <p className="text-sm font-semibold">{t.title}</p>
                 {t.body && <p className="text-sm text-muted">{t.body}</p>}
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </AnimatePresence>
       </div>

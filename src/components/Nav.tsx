@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { clsx } from "clsx";
 import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
@@ -140,7 +140,7 @@ export function Nav({ user, authEnabled }: { user: NavUser; authEnabled: boolean
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             id="mobile-menu"
             key="menu"
             className="glass fixed inset-x-0 bottom-0 top-14 z-40 border-t border-line md:hidden"
@@ -151,7 +151,7 @@ export function Nav({ user, authEnabled }: { user: NavUser; authEnabled: boolean
           >
             <ul className="container-page flex flex-col gap-1 pt-6">
               {allLinks.map((l, i) => (
-                <motion.li
+                <m.li
                   key={l.href}
                   initial={{ opacity: 0, y: -8 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -164,7 +164,7 @@ export function Nav({ user, authEnabled }: { user: NavUser; authEnabled: boolean
                   >
                     {l.label}
                   </Link>
-                </motion.li>
+                </m.li>
               ))}
               {authEnabled && (
                 <li className="mt-6 flex gap-3 px-3">
@@ -185,7 +185,7 @@ export function Nav({ user, authEnabled }: { user: NavUser; authEnabled: boolean
                 </li>
               )}
             </ul>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>

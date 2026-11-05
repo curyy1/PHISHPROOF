@@ -4,6 +4,7 @@
  */
 import { browserPages, emails, examQuestions, modules, scenarios, smsItems, urlItems } from "../src/content";
 import type { Block, Segment } from "../src/content/types";
+import { catalog } from "../src/content/catalog";
 
 const RESERVED_SUFFIXES = [".example", ".test", ".invalid", ".localhost", "example.com", "example.net", "example.org"];
 const DOC_IP = /^(192\.0\.2|198\.51\.100|203\.0\.113)\.\d{1,3}$/;
@@ -75,6 +76,10 @@ export function validateContent(): string[] {
     if (b.type === "message") checkHosts([b.from, b.subject ?? "", ...b.body].join(" "), where);
     if (b.type === "url") checkHosts(b.parts.map((p) => p.text).join(""), where);
   }
+
+  // Landing-page catalog must mirror the modules
+  const expected = modules.map((m) => ({ id: m.id, number: m.number, title: m.title, tagline: m.tagline, icon: m.icon, lessons: m.lessons.length }));
+  if (JSON.stringify(expected) !== JSON.stringify(catalog)) err("src/content/catalog.ts is out of sync with the modules — regenerate it (see its header)");
 
   // Exam
   if (examQuestions.length < 20) err("Final exam needs at least 20 questions");

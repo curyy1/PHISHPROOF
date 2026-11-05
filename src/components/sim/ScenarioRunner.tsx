@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { clsx } from "clsx";
 import { useState } from "react";
 import { scenarioById } from "@/content";
@@ -55,7 +55,7 @@ export function ScenarioRunner({ scenarioId, onComplete }: { scenarioId: string;
         )}
         <ProgressBar value={(step + (picked !== null ? 1 : 0)) / sc.steps.length} label="Scenario progress" className="mt-5" />
         <AnimatePresence mode="wait">
-          <motion.div key={st.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
+          <m.div key={st.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
             <p className="mt-6 text-lg font-semibold">
               <RichText text={st.situation} />
             </p>
@@ -83,7 +83,7 @@ export function ScenarioRunner({ scenarioId, onComplete }: { scenarioId: string;
               ))}
             </div>
             {picked !== null && (
-              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} role="status" className="mt-5">
+              <m.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} role="status" className="mt-5">
                 <p className="text-muted">
                   <span className={clsx("font-bold", st.choices[picked].best ? "text-success" : "text-danger")}>
                     {st.choices[picked].best ? "Best move. " : "Not the best move. "}
@@ -99,9 +99,9 @@ export function ScenarioRunner({ scenarioId, onComplete }: { scenarioId: string;
                 <Button size="lg" className="mt-5" onClick={next} autoFocus>
                   {step < sc.steps.length - 1 ? "Continue →" : "Finish"}
                 </Button>
-              </motion.div>
+              </m.div>
             )}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
     </div>

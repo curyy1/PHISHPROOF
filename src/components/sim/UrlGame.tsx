@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { clsx } from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { urlById, urlItems } from "@/content";
@@ -203,7 +203,7 @@ export function UrlGame({ itemIds, onComplete }: { itemIds?: string[]; onComplet
         </div>
       )}
       <AnimatePresence mode="wait">
-        <motion.div key={item.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.2 }} className="card p-5 sm:p-8">
+        <m.div key={item.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.2 }} className="card p-5 sm:p-8">
           <p className="text-sm text-muted">
             You expect to be on <span className="font-semibold text-fg">{item.expect}</span>.
           </p>
@@ -221,7 +221,7 @@ export function UrlGame({ itemIds, onComplete }: { itemIds?: string[]; onComplet
               </Button>
             </div>
           ) : (
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-6" role="status">
+            <m.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-6" role="status">
               <p className={clsx("text-lg font-bold", current.correct ? "text-success" : "text-danger")}>
                 {current.timedOut ? "⏰ Time’s up!" : current.correct ? "✓ Correct!" : "✗ Not quite."} It’s {item.safe ? "safe" : "sketchy"}.
               </p>
@@ -231,9 +231,9 @@ export function UrlGame({ itemIds, onComplete }: { itemIds?: string[]; onComplet
               <Button size="lg" className="mt-5" onClick={next} autoFocus data-testid="url-next">
                 {i < round.length - 1 ? "Next URL →" : "See results"}
               </Button>
-            </motion.div>
+            </m.div>
           )}
-        </motion.div>
+        </m.div>
       </AnimatePresence>
     </div>
   );

@@ -41,7 +41,7 @@ export function EmailScene() {
     FLAGS.forEach(({ n }) => {
       tl.from(q(`[data-flag-mark='${n}']`), { opacity: 0, scale: 0.6, duration: 0.35 }).from(
         q(`[data-flag-item='${n}']`),
-        { opacity: 0, x: 24, duration: 0.35 },
+        { opacity: 0, y: 16, duration: 0.35 },
         "<",
       );
       tl.to({}, { duration: 0.25 });

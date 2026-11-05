@@ -2,8 +2,12 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { getMyProgress, importGuestProgress, recordEvent } from "@/app/actions/progress";
-import { applyEvent, badgeById, emptyState, gradeEvent, toDayString, type GradedEvent, type ProgressState, type RawEvent } from "@/lib/progress";
+import { emptyState, type GradedEvent, type ProgressState, type RawEvent } from "@/lib/progress/types";
+import { toDayString } from "@/lib/progress/streak";
 import type { GuestLogEntry } from "@/lib/progress/validation";
+
+/** The grading engine (and all course content it needs) loads only when first used. */
+const loadEngine = () => Promise.all([import("@/lib/progress/grading"), import("@/lib/progress/reducer"), import("@/lib/progress/badges")]);
 import { useToast } from "./Toaster";
 
 const GUEST_KEY = "pp-guest-v1";
@@ -70,8 +74,10 @@ export function ProgressProvider({ children, signedIn, authEnabled }: { children
   }, [signedIn]);
 
   const celebrate = useCallback(
-    (xp: number, badges: string[]) => {
+    async (xp: number, badges: string[]) => {
       if (xp > 0) toast({ title: `+${xp} XP`, icon: "✨" });
+      if (badges.length === 0) return;
+      const { badgeById } = await import("@/lib/progress/badges");
       for (const id of badges) {
         const b = badgeById.get(id);
         if (b) toast({ title: `Badge unlocked: ${b.name}`, body: b.description, icon: b.icon });
@@ -89,9 +95,10 @@ export function ProgressProvider({ children, signedIn, authEnabled }: { children
           const r = await recordEvent(e, day);
           if (!r.ok) return { error: r.error };
           setState(r.state);
-          celebrate(r.xpGained, r.newBadges);
+          void celebrate(r.xpGained, r.newBadges);
           return { graded: r.graded, xpGained: r.xpGained, newBadges: r.newBadges };
         }
+        const [{ gradeEvent }, { applyEvent }] = await loadEngine();
         let graded: GradedEvent;
         try {
           graded = gradeEvent(e);
@@ -103,7 +110,7 @@ export function ProgressProvider({ children, signedIn, authEnabled }: { children
         const result = applyEvent(store.state, graded, at, day);
         writeGuest({ state: result.state, log: [...store.log, { event: e, at, day }].slice(-800) });
         setState(result.state);
-        celebrate(result.xpGained, result.newBadges);
+        void celebrate(result.xpGained, result.newBadges);
         return { graded, xpGained: result.xpGained, newBadges: result.newBadges };
       };
       const p = queue.current.then(run, run);

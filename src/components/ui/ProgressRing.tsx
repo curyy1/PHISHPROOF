@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 
 /** Circular progress ring. Animates the stroke via pathLength (rendered as a transform-free SVG dash animation). */
 export function ProgressRing({
@@ -31,7 +31,7 @@ export function ProgressRing({
     >
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90" aria-hidden>
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--bg-sunken)" strokeWidth={stroke} />
-        <motion.circle
+        <m.circle
           cx={size / 2}
           cy={size / 2}
           r={r}

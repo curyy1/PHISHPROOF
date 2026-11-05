@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { modules } from "@/content";
+import { m as mo } from "framer-motion";
+import { catalog as modules } from "@/content/catalog";
 
 const features = [
   { href: "/practice/inbox", icon: "📥", title: "Spot the Phish", body: "A realistic inbox with 32 emails. Click the red flags, make the call, see what you missed." },
@@ -28,7 +28,7 @@ export function Features() {
         </p>
         <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((f, i) => (
-            <motion.li
+            <mo.li
               key={f.href}
               variants={rise}
               initial="hidden"
@@ -46,7 +46,7 @@ export function Features() {
                   Open <span aria-hidden className="inline-block transition-transform group-hover:translate-x-1">→</span>
                 </p>
               </Link>
-            </motion.li>
+            </mo.li>
           ))}
         </ul>
       </div>
@@ -73,7 +73,7 @@ export function ModulesTeaser() {
           </div>
           <ol className="min-w-0 space-y-3">
             {modules.map((m, i) => (
-              <motion.li
+              <mo.li
                 key={m.id}
                 initial={{ opacity: 0, x: 24 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -88,7 +88,7 @@ export function ModulesTeaser() {
                     <p className="truncate text-sm text-muted">{m.tagline}</p>
                   </div>
                 </Link>
-              </motion.li>
+              </mo.li>
             ))}
             <li className="flex items-center gap-5 rounded-2xl bg-gradient-to-r from-brand to-[#7c4dff] p-5 text-white">
               <span aria-hidden className="text-3xl">🏅</span>

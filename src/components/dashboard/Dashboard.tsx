@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { clsx } from "clsx";
 import { modules } from "@/content";
 import {
@@ -25,7 +25,7 @@ const fade = { hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } };
 
 function Card({ children, className, delay = 0, id, label }: { children: React.ReactNode; className?: string; delay?: number; id?: string; label?: string }) {
   return (
-    <motion.section
+    <m.section
       id={id}
       aria-label={label}
       variants={fade}
@@ -35,7 +35,7 @@ function Card({ children, className, delay = 0, id, label }: { children: React.R
       className={clsx("card p-5 sm:p-6", className)}
     >
       {children}
-    </motion.section>
+    </m.section>
   );
 }
 

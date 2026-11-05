@@ -1,6 +1,6 @@
 "use client";
 
-import { MotionConfig } from "framer-motion";
+import { domAnimation, LazyMotion, MotionConfig } from "framer-motion";
 import type { ReactNode } from "react";
 import { ThemeProvider } from "./ThemeProvider";
 import { ToastProvider } from "./Toaster";
@@ -11,6 +11,7 @@ export function Providers({ children, signedIn, authEnabled }: { children: React
   return (
     <ThemeProvider>
       {/* reducedMotion="user": Framer Motion skips transform animations when the OS asks for reduced motion. */}
+      <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
         <ToastProvider>
           <ProgressProvider signedIn={signedIn} authEnabled={authEnabled}>
@@ -19,6 +20,7 @@ export function Providers({ children, signedIn, authEnabled }: { children: React
           </ProgressProvider>
         </ToastProvider>
       </MotionConfig>
+      </LazyMotion>
     </ThemeProvider>
   );
 }

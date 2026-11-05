@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useState } from "react";
 import { clsx } from "clsx";
 import type { Block } from "@/content/types";
@@ -207,7 +207,7 @@ function KnowledgeCheck({ block }: { block: Extract<Block, { type: "check" }> })
       </div>
       <AnimatePresence>
         {answered && (
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             className="mt-4 text-sm text-muted"
@@ -217,7 +217,7 @@ function KnowledgeCheck({ block }: { block: Extract<Block, { type: "check" }> })
               {block.options[picked].correct ? "Correct! " : "Not quite. "}
             </span>
             <RichText text={block.options[picked].why} />
-          </motion.p>
+          </m.p>
         )}
       </AnimatePresence>
     </fieldset>

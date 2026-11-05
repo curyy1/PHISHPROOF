@@ -4,6 +4,7 @@ import { EmailScene } from "@/components/landing/EmailScene";
 import { UrlScene } from "@/components/landing/UrlScene";
 import { AiScene } from "@/components/landing/AiScene";
 import { Features, FinalCta, ModulesTeaser } from "@/components/landing/Features";
+import { AboutCreator } from "@/components/Creator";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Features />
       <ModulesTeaser />
       <FinalCta />
+      <AboutCreator />
     </>
   );
 }

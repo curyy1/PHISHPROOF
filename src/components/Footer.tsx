@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { CreatorCredit } from "./Creator";
 
 const cols = [
   {
@@ -57,8 +58,9 @@ export function Footer() {
           </nav>
         ))}
       </div>
-      <div className="container-page border-t border-line py-6 text-xs text-subtle">
-        © {new Date().getFullYear()} Phishproof. Educational project. All brands in simulations are fictional.
+      <div className="container-page flex flex-col gap-3 border-t border-line py-6 text-xs text-subtle sm:flex-row sm:items-center sm:justify-between">
+        <span>© {new Date().getFullYear()} Phishproof. Educational project. All brands in simulations are fictional.</span>
+        <CreatorCredit />
       </div>
     </footer>
   );

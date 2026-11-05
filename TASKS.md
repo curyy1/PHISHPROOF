@@ -52,5 +52,18 @@ Legend: [x] done · [ ] todo · [~] stubbed or partially verified (see SETUP.md 
 - [x] Tests: 36 unit, RLS suite, 45 Playwright (smoke, mobile, a11y)
 - [x] README (screenshots, features, stack) and SETUP.md
 
-## Review round — 10 improvements
-- [ ] (see below)
+## Review round — 10 improvements (picky-user pass)
+- [x] 1. Branded 404 page with useful links
+- [x] 2. Fake login address bar shows the whole URL on phones (the domain is the lesson!)
+- [x] 3. Inline code wraps at sensible points instead of mid-word
+- [x] 4. Tap-to-preview link destinations in simulators (touch screens can't hover)
+- [x] 5. "Next" scrolls the next simulator item into view on mobile
+- [x] 6. Quiz "Exit" returns to the current module (was pointing at the next one)
+- [x] 7. Flash toasts after sign-up, password update and account deletion
+- [x] 8. Guests can reset their local progress
+- [x] 9. Dashboard module card no longer stretches to the sidebar height
+- [x] 10. Social share image (opengraph-image), sitemap.xml and robots.txt
+
+## Extras
+- [x] "About the creator" section on the landing page + footer credit
+- [ ] Add photo: save it as public/creator.jpg (section shows an "SB" avatar until then)

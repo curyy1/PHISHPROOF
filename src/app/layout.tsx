@@ -57,7 +57,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        <Providers>
+        <Providers signedIn={!!profile} authEnabled={isSupabaseConfigured}>
           <Nav user={navUser} authEnabled={isSupabaseConfigured} />
           <main id="main" tabIndex={-1} className="outline-none">
             {children}

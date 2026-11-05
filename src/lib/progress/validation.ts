@@ -20,7 +20,7 @@ export const rawEventSchema = z.discriminatedUnion("type", [
   }),
   z.object({
     type: z.literal("activity_complete"),
-    key: z.union([z.literal("passwords"), z.string().regex(/^scenario:[a-z0-9-]{1,48}$/)]),
+    key: z.union([z.literal("passwords"), z.custom<`scenario:${string}`>((v) => typeof v === "string" && /^scenario:[a-z0-9-]{1,48}$/.test(v))]),
   }),
 ]);
 

@@ -12,10 +12,10 @@ export const CREATOR = {
   ],
 };
 
-const hasPhoto = existsSync(path.join(process.cwd(), "public", CREATOR.photo));
+const hasPhoto = () => existsSync(path.join(process.cwd(), "public", CREATOR.photo));
 
 function Avatar({ size }: { size: number }) {
-  return hasPhoto ? (
+  return hasPhoto() ? (
     // eslint-disable-next-line @next/next/no-img-element -- static local photo
     <img
       src={CREATOR.photo}

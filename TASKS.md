@@ -66,4 +66,4 @@ Legend: [x] done · [ ] todo · [~] stubbed or partially verified (see SETUP.md 
 
 ## Extras
 - [x] "About the creator" section on the landing page + footer credit
-- [ ] Add photo: save it as public/creator.jpg (section shows an "SB" avatar until then)
+- [x] Creator photo (public/creator.jpg, cropped + compressed to 512px JPEG)

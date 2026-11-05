@@ -24,7 +24,7 @@ function Mark({ n, children, block = false }: { n: number; children: ReactNode; 
       <span
         data-flag-mark={n}
         aria-hidden
-        className="absolute -right-2 -top-3 z-10 grid h-5 w-5 place-items-center rounded-full bg-danger text-[11px] font-bold text-white"
+        className="absolute -right-2 -top-3 z-10 grid h-5 w-5 place-items-center rounded-full bg-danger text-[11px] font-bold text-on-danger"
       >
         {n}
       </span>
@@ -60,8 +60,8 @@ export function EmailScene() {
             </h2>
           </div>
 
-          <div className="mt-6 grid items-start gap-4 sm:gap-6 lg:mt-12 lg:grid-cols-[1.25fr_1fr] lg:gap-10">
-            <article data-email className="card p-4 text-[0.9rem] sm:p-7 sm:text-[0.95rem]" aria-label="Example phishing email">
+          <div className="mt-6 grid grid-cols-1 items-start gap-4 sm:gap-6 lg:mt-12 lg:grid-cols-[1.25fr_1fr] lg:gap-10">
+            <article data-email className="min-w-0 card p-4 text-[0.9rem] sm:p-7 sm:text-[0.95rem]" aria-label="Example phishing email">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="font-semibold">Lumen Bank Security</p>
@@ -96,11 +96,11 @@ export function EmailScene() {
               </div>
             </article>
 
-            <div>
+            <div className="min-w-0">
               <ol className="grid grid-cols-3 gap-1.5 sm:grid-cols-2 sm:gap-2.5 lg:grid-cols-1" aria-label="Red flags in this email">
                 {FLAGS.map((f) => (
                   <li key={f.n} data-flag-item={f.n} className="flex min-w-0 items-center gap-1.5 rounded-xl bg-elevated p-1.5 ring-1 ring-line sm:items-start sm:gap-2.5 sm:rounded-2xl sm:p-3">
-                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-danger text-[11px] font-bold text-white sm:h-6 sm:w-6 sm:text-xs">
+                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-danger text-[11px] font-bold text-on-danger sm:h-6 sm:w-6 sm:text-xs">
                       {f.n}
                     </span>
                     <div className="min-w-0">
@@ -113,7 +113,7 @@ export function EmailScene() {
                   </li>
                 ))}
               </ol>
-              <p data-verdict className="mt-3 inline-flex sm:mt-4 items-center gap-2 rounded-full bg-danger px-4 py-2 text-sm font-bold text-white">
+              <p data-verdict className="mt-3 inline-flex sm:mt-4 items-center gap-2 rounded-full bg-danger px-4 py-2 text-sm font-bold text-on-danger">
                 Verdict: Phish. Delete it and report it.
               </p>
             </div>

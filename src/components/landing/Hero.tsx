@@ -110,7 +110,7 @@ function HeroInbox() {
             </div>
             <motion.span
               className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-bold ${
-                r.phish ? "bg-danger text-white" : "bg-success-soft text-success-ink"
+                r.phish ? "bg-danger text-on-danger" : "bg-success-soft text-success-ink"
               }`}
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}

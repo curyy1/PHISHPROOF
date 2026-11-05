@@ -14,8 +14,8 @@ const variants: Record<Variant, string> = {
   primary: "bg-brand text-brand-fg hover:bg-brand-hover shadow-[0_6px_20px_-8px_var(--brand)]",
   secondary: "bg-elevated text-fg border border-line hover:border-line-strong",
   ghost: "text-brand hover:bg-brand-soft",
-  danger: "bg-danger text-white hover:opacity-90",
-  success: "bg-success text-white hover:opacity-90",
+  danger: "bg-danger text-on-danger hover:opacity-90",
+  success: "bg-success text-on-success hover:opacity-90",
 };
 
 const sizes: Record<Size, string> = {

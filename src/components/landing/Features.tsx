@@ -58,7 +58,7 @@ export function ModulesTeaser() {
   return (
     <section className="overflow-x-clip bg-elevated py-24 sm:py-32" aria-labelledby="modules-title">
       <div className="container-page">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <p className="eyebrow">The course</p>
             <h2 id="modules-title" className="mt-3 text-display font-bold">
@@ -71,7 +71,7 @@ export function ModulesTeaser() {
               See the full course
             </Link>
           </div>
-          <ol className="space-y-3">
+          <ol className="min-w-0 space-y-3">
             {modules.map((m, i) => (
               <motion.li
                 key={m.id}

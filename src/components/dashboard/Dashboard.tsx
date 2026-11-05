@@ -255,10 +255,10 @@ export function Dashboard({ displayName }: { displayName: string | null }) {
             return (
               <li
                 key={b.id}
-                className={clsx("rounded-2xl border p-4 text-center transition-transform", at ? "border-brand/30 bg-brand-soft hover:-translate-y-0.5" : "border-line opacity-60")}
+                className={clsx("rounded-2xl border p-4 text-center transition-transform", at ? "border-brand/30 bg-brand-soft hover:-translate-y-0.5" : "border-dashed border-line")}
                 title={b.description}
               >
-                <span aria-hidden className={clsx("text-3xl", !at && "grayscale")}>{b.icon}</span>
+                <span aria-hidden className={clsx("text-3xl", !at && "opacity-40 grayscale")}>{b.icon}</span>
                 <p className="mt-2 text-sm font-semibold">{b.name}</p>
                 <p className="mt-0.5 text-xs text-muted">{at ? `Earned ${new Date(at).toLocaleDateString()}` : b.description}</p>
                 <span className="sr-only">{at ? "earned" : "locked"}</span>

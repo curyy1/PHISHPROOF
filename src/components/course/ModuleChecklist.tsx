@@ -12,7 +12,7 @@ function Check({ done }: { done: boolean }) {
       aria-hidden
       className={clsx(
         "grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 text-sm font-bold transition-colors",
-        done ? "border-success bg-success text-white" : "border-line-strong text-transparent",
+        done ? "border-success bg-success text-on-success" : "border-line-strong text-transparent",
       )}
     >
       ✓

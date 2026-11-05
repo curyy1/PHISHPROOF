@@ -29,7 +29,7 @@ export default async function VerifyPage({ params }: Props) {
       {c ? (
         <>
           <div className="flex items-center gap-3 rounded-2xl bg-success-soft p-5 text-success-ink" role="status">
-            <span aria-hidden className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-success text-xl text-white">✓</span>
+            <span aria-hidden className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-success text-xl text-on-success">✓</span>
             <div>
               <p className="text-lg font-bold">Valid certificate</p>
               <p className="text-sm">This certificate was issued by Phishproof and has not been revoked.</p>

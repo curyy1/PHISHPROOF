@@ -94,7 +94,8 @@ export function Flaggable({
       role="button"
       tabIndex={grade ? -1 : 0}
       aria-pressed={isFlagged}
-      aria-label={`${label}${isFlagged ? " (flagged)" : ""}`}
+      aria-describedby="flag-hint"
+      title={grade ? undefined : `Flag as suspicious: ${label}`}
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -127,6 +128,15 @@ export function Flaggable({
   );
 }
 
+/** Shared description for every flaggable element (referenced by aria-describedby). */
+export function FlagHint() {
+  return (
+    <span id="flag-hint" className="sr-only">
+      Toggle to flag this part as suspicious.
+    </span>
+  );
+}
+
 export function VerdictBar({
   onAnswer,
   busy,
@@ -144,6 +154,7 @@ export function VerdictBar({
 }) {
   return (
     <div className="sticky bottom-3 z-10 mt-4 rounded-2xl border border-line bg-elevated/95 p-3 shadow-xl backdrop-blur sm:p-4">
+      <FlagHint />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted" aria-live="polite">
           {flagged === 0 ? "Tap anything suspicious to flag it, then decide." : `${flagged} item${flagged === 1 ? "" : "s"} flagged.`}

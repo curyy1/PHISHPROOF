@@ -123,6 +123,7 @@
     scroll-padding-top: 5rem;
   }
   body {
+    overflow-x: clip; /* safety net against horizontal scroll; unlike hidden, keeps position: sticky working */
     background: var(--bg);
     color: var(--fg);
     font-family: var(--font-sans);

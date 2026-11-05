@@ -56,7 +56,7 @@ export function Features() {
 
 export function ModulesTeaser() {
   return (
-    <section className="bg-elevated py-24 sm:py-32" aria-labelledby="modules-title">
+    <section className="overflow-x-clip bg-elevated py-24 sm:py-32" aria-labelledby="modules-title">
       <div className="container-page">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
           <div className="lg:sticky lg:top-28 lg:self-start">

@@ -99,12 +99,12 @@ export function EmailScene() {
             <div>
               <ol className="grid grid-cols-3 gap-1.5 sm:grid-cols-2 sm:gap-2.5 lg:grid-cols-1" aria-label="Red flags in this email">
                 {FLAGS.map((f) => (
-                  <li key={f.n} data-flag-item={f.n} className="flex items-center gap-1.5 rounded-xl bg-elevated p-1.5 ring-1 ring-line sm:items-start sm:gap-2.5 sm:rounded-2xl sm:p-3">
+                  <li key={f.n} data-flag-item={f.n} className="flex min-w-0 items-center gap-1.5 rounded-xl bg-elevated p-1.5 ring-1 ring-line sm:items-start sm:gap-2.5 sm:rounded-2xl sm:p-3">
                     <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-danger text-[11px] font-bold text-white sm:h-6 sm:w-6 sm:text-xs">
                       {f.n}
                     </span>
-                    <div>
-                      <p className="text-sm font-semibold">
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold sm:text-sm">
                         <span className="sm:hidden">{f.short}</span>
                         <span className="hidden sm:inline">{f.title}</span>
                       </p>

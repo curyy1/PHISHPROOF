@@ -52,9 +52,9 @@ export function UrlScene() {
 
           <div
             data-url
-            className="mx-auto mt-10 max-w-4xl overflow-x-auto rounded-2xl bg-sunken px-4 py-5 font-mono text-[clamp(0.85rem,0.6rem+1.4vw,1.6rem)] sm:px-6"
+            className="mx-auto mt-10 max-w-4xl overflow-x-auto rounded-2xl bg-sunken px-4 py-5 font-mono text-[clamp(0.9rem,0.6rem+1.2vw,1.4rem)] sm:px-6"
           >
-            <span className="inline-flex items-center whitespace-nowrap">
+            <span className="flex flex-wrap items-center justify-center whitespace-nowrap">
               <span className="relative mr-2">
                 <span data-hl="lock" className={`${hl} bg-warn/25 ring-2 ring-warn motion-reduce:hidden`} />
                 <span aria-hidden className="relative">🔒</span>

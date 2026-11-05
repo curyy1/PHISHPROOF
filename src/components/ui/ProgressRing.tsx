@@ -39,6 +39,7 @@ export function ProgressRing({
           stroke={color}
           strokeWidth={stroke}
           strokeLinecap="round"
+          strokeOpacity={v === 0 ? 0 : 1}
           initial={{ pathLength: reduce ? v : 0 }}
           animate={{ pathLength: v }}
           transition={{ duration: reduce ? 0 : 1.1, ease: [0.16, 1, 0.3, 1] }}

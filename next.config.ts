@@ -21,6 +21,8 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Fonts read from disk by the certificate renderer must ship with that route.
+  outputFileTracingIncludes: { "/api/certificate/[id]": ["./src/assets/fonts/**"] },
   reactStrictMode: true,
   turbopack: {
     rules: {

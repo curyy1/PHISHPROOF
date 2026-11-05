@@ -8,53 +8,56 @@ import { emptyState, type ApplyResult, type DrillKind, type GradedEvent, type Pr
 type Row = Record<string, unknown>;
 
 /**
- * Build a learner's ProgressState from the database. Works with either the
- * user's own client (RLS: own rows, or a teacher reading a student) or the admin client.
+ * Build learners' ProgressState from the database (batched: 8 queries total, any number of users).
+ * Works with the user's own client (RLS: own rows, or a teacher reading their students) or the admin client.
  */
-export async function loadState(db: SupabaseClient, userId: string): Promise<ProgressState> {
+export async function loadStates(db: SupabaseClient, userIds: string[]): Promise<Map<string, ProgressState>> {
+  const out = new Map<string, ProgressState>(userIds.map((id) => [id, emptyState()]));
+  if (userIds.length === 0) return out;
   const [profile, lessons, quizzes, drills, acts, days, badges, log] = await Promise.all([
-    db.from("profiles").select("xp").eq("id", userId).maybeSingle(),
-    db.from("lesson_progress").select("lesson_id, completed_at").eq("user_id", userId),
-    db.from("quiz_attempts").select("quiz_id, score, total, created_at").eq("user_id", userId).order("created_at"),
-    db.from("drill_results").select("drill, item_id, is_phish, correct, found, missed, false_flags, created_at").eq("user_id", userId).order("created_at"),
-    db.from("user_activities").select("key, completed_at").eq("user_id", userId),
-    db.from("daily_activity").select("day").eq("user_id", userId).order("day"),
-    db.from("user_badges").select("badge_id, earned_at").eq("user_id", userId),
-    db.from("activity_log").select("kind, label, xp, href, created_at").eq("user_id", userId).order("created_at", { ascending: false }).limit(ACTIVITY_LOG_LIMIT),
+    db.from("profiles").select("id, xp").in("id", userIds),
+    db.from("lesson_progress").select("user_id, lesson_id, completed_at").in("user_id", userIds),
+    db.from("quiz_attempts").select("user_id, quiz_id, score, total, created_at").in("user_id", userIds).order("created_at"),
+    db.from("drill_results").select("user_id, drill, item_id, is_phish, correct, found, missed, false_flags, created_at").in("user_id", userIds).order("created_at"),
+    db.from("user_activities").select("user_id, key, completed_at").in("user_id", userIds),
+    db.from("daily_activity").select("user_id, day").in("user_id", userIds).order("day"),
+    db.from("user_badges").select("user_id, badge_id, earned_at").in("user_id", userIds),
+    userIds.length === 1
+      ? db.from("activity_log").select("user_id, kind, label, xp, href, created_at").eq("user_id", userIds[0]).order("created_at", { ascending: false }).limit(ACTIVITY_LOG_LIMIT)
+      : Promise.resolve({ data: [] as Row[], error: null }),
   ]);
   const firstError = [profile, lessons, quizzes, drills, acts, days, badges].find((r) => r.error)?.error;
   if (firstError) throw new Error(`Failed to load progress: ${firstError.message}`);
+  const get = (r: Row) => out.get(r.user_id as string ?? r.id as string);
 
-  const s = emptyState();
-  s.xp = (profile.data?.xp as number) ?? 0;
-  for (const r of (lessons.data ?? []) as Row[]) s.lessons[r.lesson_id as string] = r.completed_at as string;
-  s.quizzes = ((quizzes.data ?? []) as Row[]).map((r) => ({
-    quizId: r.quiz_id as string,
-    score: r.score as number,
-    total: r.total as number,
-    at: r.created_at as string,
-  }));
-  s.drills = ((drills.data ?? []) as Row[]).map((r) => ({
-    drill: r.drill as DrillKind,
-    itemId: r.item_id as string,
-    isPhish: r.is_phish as boolean,
-    correct: r.correct as boolean,
-    found: (r.found as FlagType[]) ?? [],
-    missed: (r.missed as FlagType[]) ?? [],
-    falseFlags: (r.false_flags as number) ?? 0,
-    at: r.created_at as string,
-  }));
-  for (const r of (acts.data ?? []) as Row[]) s.activities[r.key as string] = r.completed_at as string;
-  s.days = ((days.data ?? []) as Row[]).map((r) => String(r.day).slice(0, 10));
-  for (const r of (badges.data ?? []) as Row[]) s.badges[r.badge_id as string] = r.earned_at as string;
-  s.activity = ((log.data ?? []) as Row[]).map((r) => ({
-    kind: r.kind as string,
-    label: r.label as string,
-    xp: r.xp as number,
-    href: (r.href as string) ?? undefined,
-    at: r.created_at as string,
-  }));
-  return s;
+  for (const r of (profile.data ?? []) as Row[]) {
+    const s = out.get(r.id as string);
+    if (s) s.xp = (r.xp as number) ?? 0;
+  }
+  for (const r of (lessons.data ?? []) as Row[]) get(r)!.lessons[r.lesson_id as string] = r.completed_at as string;
+  for (const r of (quizzes.data ?? []) as Row[])
+    get(r)!.quizzes.push({ quizId: r.quiz_id as string, score: r.score as number, total: r.total as number, at: r.created_at as string });
+  for (const r of (drills.data ?? []) as Row[])
+    get(r)!.drills.push({
+      drill: r.drill as DrillKind,
+      itemId: r.item_id as string,
+      isPhish: r.is_phish as boolean,
+      correct: r.correct as boolean,
+      found: (r.found as FlagType[]) ?? [],
+      missed: (r.missed as FlagType[]) ?? [],
+      falseFlags: (r.false_flags as number) ?? 0,
+      at: r.created_at as string,
+    });
+  for (const r of (acts.data ?? []) as Row[]) get(r)!.activities[r.key as string] = r.completed_at as string;
+  for (const r of (days.data ?? []) as Row[]) get(r)!.days.push(String(r.day).slice(0, 10));
+  for (const r of (badges.data ?? []) as Row[]) get(r)!.badges[r.badge_id as string] = r.earned_at as string;
+  for (const r of (log.data ?? []) as Row[])
+    get(r)?.activity.push({ kind: r.kind as string, label: r.label as string, xp: r.xp as number, href: (r.href as string) ?? undefined, at: r.created_at as string });
+  return out;
+}
+
+export async function loadState(db: SupabaseClient, userId: string): Promise<ProgressState> {
+  return (await loadStates(db, [userId])).get(userId)!;
 }
 
 /** Persist the effects of one applied event. Uses the admin client, always scoped to `userId`. */

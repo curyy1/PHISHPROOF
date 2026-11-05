@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { ThemeProvider } from "./ThemeProvider";
 import { ToastProvider } from "./Toaster";
 import { ProgressProvider } from "./ProgressProvider";
+import { ServiceWorker } from "./ServiceWorker";
 
 export function Providers({ children, signedIn, authEnabled }: { children: ReactNode; signedIn: boolean; authEnabled: boolean }) {
   return (
@@ -13,6 +14,7 @@ export function Providers({ children, signedIn, authEnabled }: { children: React
       <MotionConfig reducedMotion="user">
         <ToastProvider>
           <ProgressProvider signedIn={signedIn} authEnabled={authEnabled}>
+            <ServiceWorker />
             {children}
           </ProgressProvider>
         </ToastProvider>

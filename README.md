@@ -139,4 +139,4 @@ That runs the whole site in demo mode, with progress saved in your browser. To t
 
 ## Credits
 
-Created by **Srithan Bodla**, a 17-year-old with a dream to make phishing attacks obsolete. Inter Tight font (SIL OFL). All brands, people and domains in simulations are fictional.
+Created by **Srithan Bodla**, an 18-year-old with a dream to make phishing attacks obsolete. Inter Tight font (SIL OFL). All brands, people and domains in simulations are fictional.

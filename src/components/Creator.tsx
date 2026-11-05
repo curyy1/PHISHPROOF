@@ -4,7 +4,7 @@ import path from "node:path";
 export const CREATOR = {
   name: "Srithan Bodla",
   photo: "/creator.jpg", // drop a square-ish photo at public/creator.jpg
-  tagline: "I’m 17, and I have a dream: make phishing attacks obsolete.",
+  tagline: "I’m 18, and I have a dream: make phishing attacks obsolete.",
   story: [
     "The idea for Phishproof started with a real breach. A nonprofit that handles sensitive information had that data leaked — and it didn’t take a genius hacker breaking through firewalls. It took phishing: one convincing message that got someone to click.",
     "That stuck with me. An organization built to help people lost their trust to a problem that can be prevented. If one email can do that much damage, then teaching people to recognize that email is one of the most powerful defenses there is.",

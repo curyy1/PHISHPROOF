@@ -41,7 +41,10 @@ export function QuizRunner({
 
   // Focus the question heading when it changes (screen readers + keyboard users).
   useEffect(() => {
-    if (phase === "question" || phase === "results") headingRef.current?.focus();
+    if (phase === "question" || phase === "results") {
+      headingRef.current?.focus({ preventScroll: true });
+      if (phase === "results") window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }, [phase, i]);
 
   function start() {

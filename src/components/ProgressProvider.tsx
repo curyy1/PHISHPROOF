@@ -43,6 +43,8 @@ type Ctx = {
   submit: (e: RawEvent) => Promise<SubmitOutcome>;
   importGuest: () => Promise<void>;
   discardGuest: () => void;
+  /** Guests only: wipe local progress and start over. */
+  resetGuest: () => void;
 };
 
 const ProgressContext = createContext<Ctx | null>(null);
@@ -139,9 +141,14 @@ export function ProgressProvider({ children, signedIn, authEnabled }: { children
     setPendingGuestImport(0);
   }, []);
 
+  const resetGuest = useCallback(() => {
+    writeGuest(null);
+    setState(emptyState());
+  }, []);
+
   const value = useMemo(
-    () => ({ state, loading, signedIn, authEnabled, pendingGuestImport, submit, importGuest, discardGuest }),
-    [state, loading, signedIn, authEnabled, pendingGuestImport, submit, importGuest, discardGuest],
+    () => ({ state, loading, signedIn, authEnabled, pendingGuestImport, submit, importGuest, discardGuest, resetGuest }),
+    [state, loading, signedIn, authEnabled, pendingGuestImport, submit, importGuest, discardGuest, resetGuest],
   );
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;
 }

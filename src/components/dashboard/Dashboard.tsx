@@ -48,7 +48,7 @@ function timeAgo(iso: string) {
 }
 
 export function Dashboard({ displayName }: { displayName: string | null }) {
-  const { state, loading, signedIn, authEnabled, pendingGuestImport, importGuest, discardGuest } = useProgress();
+  const { state, loading, signedIn, authEnabled, pendingGuestImport, importGuest, discardGuest, resetGuest } = useProgress();
   if (loading || !state)
     return (
       <div className="grid gap-4 md:grid-cols-3" aria-busy="true" aria-label="Loading your dashboard">
@@ -160,7 +160,7 @@ export function Dashboard({ displayName }: { displayName: string | null }) {
         <ButtonLink href={step.href} size="lg" data-testid="continue">Continue →</ButtonLink>
       </Card>
 
-      <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid items-start gap-4 lg:grid-cols-[1.4fr_1fr]">
         <Card delay={0.15} label="Modules">
           <h2 className="text-title font-bold">Modules</h2>
           <ul className="mt-4 space-y-3">
@@ -267,6 +267,20 @@ export function Dashboard({ displayName }: { displayName: string | null }) {
           })}
         </ul>
       </Card>
+
+      {!signedIn && state.activity.length > 0 && (
+        <div className="flex justify-end">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              if (window.confirm("Reset all progress saved in this browser? This can’t be undone.")) resetGuest();
+            }}
+          >
+            Reset my guest progress
+          </Button>
+        </div>
+      )}
 
       <Card delay={0.35} label="Recent activity">
         <h2 className="text-title font-bold">Recent activity</h2>

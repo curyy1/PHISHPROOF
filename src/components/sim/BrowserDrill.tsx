@@ -5,7 +5,7 @@ import { browserById } from "@/content";
 import type { BrowserPage } from "@/content/types";
 import { RichText } from "@/components/RichText";
 import { TrainingBadge } from "@/components/ui/Pill";
-import { DrillFeedback, DrillHeader, Flaggable, useDrillItem, VerdictBar } from "./shared";
+import { DrillFeedback, DrillHeader, Flaggable, useBringIntoView, useDrillItem, VerdictBar } from "./shared";
 
 export function BrowserDrill({ itemIds, onComplete }: { itemIds: string[]; onComplete?: () => void }) {
   const items = useMemo(() => itemIds.map((id) => browserById.get(id)!).filter(Boolean), [itemIds]);
@@ -24,8 +24,9 @@ export function BrowserDrill({ itemIds, onComplete }: { itemIds: string[]; onCom
 function BrowserItem({ page, onNext, isLast, hasComplete }: { page: BrowserPage; onNext: () => void; isLast: boolean; hasComplete: boolean }) {
   const d = useDrillItem("browser", page.id);
   const flagProps = { clicked: d.clicked, grade: d.grade, onToggle: d.toggle };
+  const topRef = useBringIntoView<HTMLDivElement>();
   return (
-    <div>
+    <div ref={topRef}>
       <p className="mb-4 rounded-2xl bg-brand-soft px-4 py-3 text-brand-ink">
         <span className="font-semibold">Scenario: </span>
         <RichText text={page.scenario} />
@@ -39,11 +40,11 @@ function BrowserItem({ page, onNext, isLast, hasComplete }: { page: BrowserPage;
               <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
               <span className="h-3 w-3 rounded-full bg-[#28c840]" />
             </div>
-            <div className="flex min-w-0 flex-1 items-center gap-1.5 rounded-full bg-elevated px-3 py-1.5 font-mono text-[13px] ring-1 ring-line sm:text-sm" aria-label="Address bar (click parts to flag them)">
+            <div className="flex min-w-0 flex-1 items-start gap-1.5 rounded-2xl bg-elevated px-3 py-1.5 sm:items-center sm:rounded-full font-mono text-[13px] ring-1 ring-line sm:text-sm" aria-label="Address bar (click parts to flag them)">
               <span aria-label={page.url.scheme === "https" ? "Secure connection padlock" : "Not secure"} className={page.url.scheme === "https" ? "" : "text-danger"}>
                 {page.url.scheme === "https" ? "🔒" : "⚠️"}
               </span>
-              <span className="min-w-0 overflow-x-auto whitespace-nowrap">
+              <span className="min-w-0 break-all sm:overflow-x-auto sm:whitespace-nowrap sm:break-normal">
                 <span className="text-subtle">{page.url.scheme}://</span>
                 {page.url.parts.map((p) => (
                   <Flaggable key={p.id} id={p.id} hs={p.hs} label={`Address part: ${p.t}`} {...flagProps}>

@@ -1,12 +1,12 @@
 "use client";
 
 import { clsx } from "clsx";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { emailById } from "@/content";
 import type { Email, Segment } from "@/content/types";
 import { useProgress } from "@/components/ProgressProvider";
 import { TrainingBadge } from "@/components/ui/Pill";
-import { DrillFeedback, DrillHeader, Flaggable, useDrillItem, VerdictBar, type DrillGrade } from "./shared";
+import { DrillFeedback, DrillHeader, Flaggable, useBringIntoView, useDrillItem, VerdictBar, type DrillGrade } from "./shared";
 
 /** Spot the Phish: a fake mail client. `itemIds` sets the queue; `onComplete` fires after the last one. */
 export function InboxSimulator({ itemIds, onComplete }: { itemIds: string[]; onComplete?: () => void }) {
@@ -96,10 +96,10 @@ export function InboxSimulator({ itemIds, onComplete }: { itemIds: string[]; onC
 function EmailView({ email, onNext, isLast, hasComplete }: { email: Email; onNext: () => void; isLast: boolean; hasComplete: boolean }) {
   const d = useDrillItem("inbox", email.id);
   const [hoverHref, setHoverHref] = useState<string | null>(null);
-  const top = useRef<HTMLDivElement>(null);
+  const top = useBringIntoView<HTMLDivElement>();
   useEffect(() => {
     top.current?.focus({ preventScroll: true });
-  }, []);
+  }, [top]);
 
   const flagProps = { clicked: d.clicked, grade: d.grade, onToggle: d.toggle };
 
@@ -165,7 +165,7 @@ function EmailView({ email, onNext, isLast, hasComplete }: { email: Email; onNex
             <span className="break-all text-fg">{hoverHref}</span>
           </>
         ) : (
-          <span className="text-subtle">Hover over (or focus) a link to preview where it really goes.</span>
+          <span className="text-subtle">Hover, focus or tap a link to preview where it really goes (on a real phone: press and hold).</span>
         )}
       </div>
 
@@ -212,6 +212,7 @@ function SegmentView({
         className={clsx("inline-block", isButton && "my-1")}
       >
         <span
+          onClick={() => onHover(seg.href!)}
           onMouseEnter={() => onHover(seg.href!)}
           onMouseLeave={() => onHover(null)}
           onFocus={() => onHover(seg.href!)}

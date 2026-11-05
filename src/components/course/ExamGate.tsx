@@ -38,6 +38,7 @@ export function ExamGate() {
       title="Final exam"
       passPercent={EXAM_PASS_PERCENT}
       shuffle
+      exitHref="/learn"
       continueHref="/certificate"
       continueLabel="Claim your certificate →"
     />

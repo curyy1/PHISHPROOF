@@ -16,3 +16,12 @@ test("no horizontal scroll on key pages", async ({ page }) => {
     expect(overflow, path).toBeLessThanOrEqual(1);
   }
 });
+
+test("fake login address bar shows the whole URL on phones", async ({ page }) => {
+  await page.goto("/practice/browser");
+  if (await page.getByText("Sign in to use").isVisible()) test.skip(true, "gated without an account");
+  const bar = page.getByLabel("Address bar (click parts to flag them)");
+  await expect(bar).toContainText("verify-id.test/login");
+  const fits = await bar.evaluate((el) => el.scrollWidth <= el.clientWidth + 1);
+  expect(fits).toBe(true);
+});

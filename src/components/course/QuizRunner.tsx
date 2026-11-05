@@ -21,6 +21,7 @@ export function QuizRunner({
   shuffle = false,
   continueHref,
   continueLabel,
+  exitHref,
 }: {
   quizId: string;
   title: string;
@@ -28,6 +29,7 @@ export function QuizRunner({
   shuffle?: boolean;
   continueHref: string;
   continueLabel: string;
+  exitHref: string;
 }) {
   const base = useMemo(() => questionsFor(quizId) ?? [], [quizId]);
   const [questions, setQuestions] = useState<QuizQuestion[]>(base);
@@ -164,7 +166,7 @@ export function QuizRunner({
         <span>
           Question {i + 1} of {questions.length}
         </span>
-        <Link href={continueHref.split("#")[0]} className="hover:text-fg">Exit</Link>
+        <Link href={exitHref} className="hover:text-fg">Exit</Link>
       </div>
       <ProgressBar value={(i + (answered ? 1 : 0)) / questions.length} label="Quiz progress" />
       <AnimatePresence mode="wait">

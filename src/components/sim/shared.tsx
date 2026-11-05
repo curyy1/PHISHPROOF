@@ -2,7 +2,7 @@
 
 import { AnimatePresence, m } from "framer-motion";
 import { clsx } from "clsx";
-import { useCallback, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import type { Hotspot } from "@/content/types";
 import { FLAG_INFO } from "@/content";
 import { RichText } from "@/components/RichText";
@@ -11,6 +11,23 @@ import { Button } from "@/components/ui/Button";
 import type { DrillKind, GradedEvent } from "@/lib/progress";
 
 export type DrillGrade = Extract<GradedEvent, { type: "drill" }>;
+
+/**
+ * When a new simulator item mounts (after "Next"), bring its top into view if the
+ * learner had scrolled past it — common on phones where the verdict bar is far down.
+ */
+export function useBringIntoView<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (el.getBoundingClientRect().top < 64) {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top - 88, behavior: reduce ? "auto" : "smooth" });
+    }
+  }, []);
+  return ref;
+}
 
 /** State for one simulator item: flagged elements, verdict, grading result. */
 export function useDrillItem(drill: DrillKind, itemId: string) {

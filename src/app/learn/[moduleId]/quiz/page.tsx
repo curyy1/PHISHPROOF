@@ -27,6 +27,7 @@ export default async function QuizPage({ params }: Props) {
         quizId={m.id}
         title={`Module ${m.number} quiz: ${m.title}`}
         passPercent={70}
+        exitHref={`/learn/${m.id}`}
         continueHref={nextModule ? `/learn/${nextModule.id}` : "/exam"}
         continueLabel={nextModule ? `Start Module ${nextModule.number} →` : "Go to the final exam →"}
       />

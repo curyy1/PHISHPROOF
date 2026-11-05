@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { smsById } from "@/content";
 import type { Sms } from "@/content/types";
 import { TrainingBadge } from "@/components/ui/Pill";
-import { DrillFeedback, DrillHeader, Flaggable, useDrillItem, VerdictBar } from "./shared";
+import { DrillFeedback, DrillHeader, Flaggable, useBringIntoView, useDrillItem, VerdictBar } from "./shared";
 
 export function SmsSimulator({ itemIds, onComplete }: { itemIds: string[]; onComplete?: () => void }) {
   const items = useMemo(() => itemIds.map((id) => smsById.get(id)!).filter(Boolean), [itemIds]);
@@ -25,10 +25,11 @@ function PhoneItem({ item, onNext, isLast, hasComplete }: { item: Sms; onNext: (
   const d = useDrillItem("sms", item.id);
   const [scanned, setScanned] = useState<Record<string, boolean>>({});
   const flagProps = { clicked: d.clicked, grade: d.grade, onToggle: d.toggle };
+  const topRef = useBringIntoView<HTMLDivElement>();
   const channelLabel = { sms: "Messages", dm: "Direct messages", voicemail: "Voicemail" }[item.channel];
 
   return (
-    <div className="grid items-start gap-6 lg:grid-cols-[22rem_1fr]">
+    <div ref={topRef} className="grid items-start gap-6 lg:grid-cols-[22rem_1fr]">
       {/* Phone frame */}
       <div className="mx-auto w-full max-w-[22rem] rounded-[2.6rem] border-[10px] border-[#111318] bg-[#111318] shadow-2xl dark:border-[#2a2d36]">
         <div className="overflow-hidden rounded-[2rem] bg-elevated">

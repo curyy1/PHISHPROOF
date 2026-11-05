@@ -16,7 +16,7 @@ function parse(text: string): ReactNode[] {
       return <strong key={i} className="font-semibold text-fg">{part.slice(2, -2)}</strong>;
     if (part.startsWith("`") && part.endsWith("`") && part.length > 2)
       return (
-        <code key={i} className="break-all rounded-md bg-sunken px-1.5 py-0.5 font-mono text-[0.88em] text-fg">
+        <code key={i} className="rounded-md bg-sunken [overflow-wrap:anywhere] px-1.5 py-0.5 font-mono text-[0.88em] text-fg">
           {part.slice(1, -1)}
         </code>
       );

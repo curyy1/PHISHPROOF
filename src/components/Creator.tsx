@@ -4,10 +4,11 @@ import path from "node:path";
 export const CREATOR = {
   name: "Srithan Bodla",
   photo: "/creator.jpg", // drop a square-ish photo at public/creator.jpg
-  bio: [
-    "I’m a student who loves building things with code and teaching others to do the same.",
-    "I’m a Lead Sensei at a coding school and president of my school’s TSA (Technology Student Association) chapter.",
-    "I built Phishproof because most hacks start with a person, not a computer — and I wanted a free, fun way for my students and chapter members to learn to spot scams. It’s also a cybersecurity project I’m proud of.",
+  tagline: "I’m 17, and I have a dream: make phishing attacks obsolete.",
+  story: [
+    "The idea for Phishproof started with a real breach. A nonprofit that handles sensitive information had that data leaked — and it didn’t take a genius hacker breaking through firewalls. It took phishing: one convincing message that got someone to click.",
+    "That stuck with me. An organization built to help people lost their trust to a problem that can be prevented. If one email can do that much damage, then teaching people to recognize that email is one of the most powerful defenses there is.",
+    "So I built Phishproof: free, hands-on, and simple enough for anyone to learn to stop a phishing attack before it starts.",
   ],
 };
 
@@ -47,8 +48,10 @@ export function AboutCreator() {
             <h2 id="creator-title" className="mt-2 text-title font-bold">
               Hi, I’m {CREATOR.name} 👋
             </h2>
-            <div className="mt-3 space-y-2 text-muted">
-              {CREATOR.bio.map((p) => (
+            <p className="mt-2 text-lead font-semibold text-fg">{CREATOR.tagline}</p>
+            <h3 className="mt-6 text-sm font-semibold uppercase tracking-wide text-subtle">The story behind Phishproof</h3>
+            <div className="mt-2 space-y-3 text-muted">
+              {CREATOR.story.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
